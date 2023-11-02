@@ -179,7 +179,7 @@ function B2MB_KB(v){
 function setValueDoc(doc,v){
 	doc.style.color = v.color;
 	doc.style.fontWeight="bold";
-	doc.style.fontSize="12px";
+	//doc.style.fontSize="12px";
 	if(!v.error){
 		let value,text;
 		if(v.type=="B"){
