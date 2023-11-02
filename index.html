@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<title>Calculadora de límite de ráfaga</title>
+	</head>
+	<body>
+	<h1>Calculadora de límite de ráfaga</h1>
+	<div class="grid-layout">
+		<div class="caja">
+			<div style="width:100%;border-bottom:2px solid #bbb; margin-bottom: 15px;">
+				<b>TARGET UPLOAD</b>
+			</div>
+			<div style="width:100%;">
+				<label>Max Limit (K/M)
+				<input type="text" id="up_maxLimit" onkeyup="update()">
+				</label>
+			</div>
+			<div style="width:100%;">
+				<label>Burst Limit (K/M)
+				<input type="text" id="up_burstLimit" onkeyup="update()">
+				</label>
+			</div>
+			<div style="width:100%;">
+				<label>Actual Burst Time (s)
+				<input type="text" id="up_actualBurstTime" onkeyup="update()">
+				</label>
+			</div>
+			<div style='font-size:12px; text-align: left; font-weight:bold;'>
+				<div style='text-align: center; font-weight:bold;'>
+				<span>Burst Threshold </span>
+				<span id="up_burstThreshold"></span>
+				<span> ( R =</span>
+				<span id="up_burstThresholdRatioSpan"></span>
+				<span> )</span>
+				</div>
+				<input id="up_burstThresholdRatio" type="range" class="slider sliderBurstThreshold">
+				<div style='text-align: center; font-weight:bold;'>
+				<span>Limit At </span>
+				<span id="up_limitAt"></span>
+				<span> ( R =</span>
+				<span id="up_limitAtRatioSpan"></span>
+				<span> )</span>
+				</div>
+				<input id="up_limitAtRatio" type="range" class="slider sliderLimitAt">
+			</div>
+			<div class="actual">
+				Actual Burst Time Duration:
+				<div style="clear:both; margin-top:5px">
+					( <span id="line1_up_burstThreshold"></span>
+					* <span id="line1_up_burstTime"></span>s )
+					/ <span id="line1_up_burstLimit"></span>
+					= <span id="line1_up_actualBurstTime"></span> sec.
+					<br>
+				</div>
+				<div style='font-size:12px; margin-top:5px; padding-top:5px; border-top:1px solid #292929'>
+					Burst <span id="line2_up_maxLimit"></span>
+					to <span id="line2_up_burstLimit"></span>
+					for <span id="line2_up_actualBurstTime"></span> sec.
+					<br>
+				</div>
+			</div>
+		</div>
+		<div class="caja">
+			<div style="width:100%;border-bottom:2px solid #bbb; margin-bottom: 15px;">
+				<b>TARGET DOWNLOAD</b>
+			</div>
+			<div style="width:100%;">
+				<label>Max Limit (K/M)
+				<input type="text" id="down_maxLimit" onkeyup="update()">
+				</label>
+			</div>
+			<div style="width:100%;">
+				<label>Burst Limit (K/M)
+				<input type="text" id="down_burstLimit" onkeyup="update()">
+				</label>
+			</div>
+			<div style="width:100%;">
+				<label>Actual Burst Time (s)
+				<input type="text" id="down_actualBurstTime" onkeyup="update()">
+				</label>
+			</div>
+			<div style='font-size:12px; text-align: left; font-weight:bold;'>
+				<div style='text-align: center; font-weight:bold;'>
+				<span>Burst Threshold </span>
+				<span id="down_burstThreshold"></span>
+				<span> ( R =</span>
+				<span id="down_burstThresholdRatioSpan"></span>
+				<span> )</span>
+				</div>
+				<input id="down_burstThresholdRatio" type="range" class="slider sliderBurstThreshold">
+				<div style='text-align: center; font-weight:bold;'>
+				<span>Limit At </span>
+				<span id="down_limitAt"></span>
+				<span> ( R =</span>
+				<span id="down_limitAtRatioSpan"></span>
+				<span> )</span>
+				</div>
+				<input id="down_limitAtRatio" type="range" class="slider sliderLimitAt">
+			</div>
+			<div class="actual">
+				Actual Burst Time Duration:
+				<div style="clear:both; margin-top:5px">
+					( <span id="line1_down_burstThreshold"></span>
+					* <span id="line1_down_burstTime"></span>s )
+					/ <span id="line1_down_burstLimit"></span>
+					= <span id="line1_down_actualBurstTime"></span> sec.
+					<br>
+				</div>
+				<div style='font-size:12px; margin-top:5px; padding-top:5px; border-top:1px solid #292929'>
+					Burst <span id="line2_down_maxLimit"></span>
+					to <span id="line2_down_burstLimit"></span>
+					for <span id="line2_down_actualBurstTime"></span> sec.
+					<br>
+				</div>
+			</div>
+		</div>
+		<div class="caja tabla">
+			<div style="width:100%;border-bottom:2px solid #bbb; margin-bottom: 15px; text-align:center;">
+				<b>RATE LIMIT FOR <span style="color:#ff6600">HOTSPOT</span>
+				OR <span style="color:#ff6600">PPPOE</span></b>
+			</div>
+			<div style="clear:both; margin-top:5px; text-align:center;">
+					<span id="res_up_maxLimit"></span>/<span id="res_down_maxLimit"></span> 
+					<span id="res_up_burstLimit"></span>/<span id="res_down_burstLimit"></span> 
+					<span id="res_up_burstThreshold"></span>/<span id="res_down_burstThreshold"></span> 
+					<span id="res_up_burstTime"></span>/<span id="res_down_burstTime"></span> 
+					<span id="res_priority"></span> 
+					<span id="res_up_limitAt"></span>/<span id="res_down_limitAt"></span> 
+					<br>
+				</div>
+		</div>
+		<div class="caja">
+			GRÁFICAS
+		</div>
+		<div class="caja">
+			FÓRMULAS
+		</div>
+	</div>
+	<script src="index.js"></script>
+	</body>
+</html>
