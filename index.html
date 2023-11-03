@@ -12,18 +12,13 @@
 				<b>TARGET UPLOAD</b>
 			</div>
 			<div style="width:100%;">
-				<label>Max Limit (K/M)
-				<input type="text" id="up_maxLimit" onkeyup="update()">
-				</label>
-			</div>
-			<div style="width:100%;">
 				<label>Burst Limit (K/M)
 				<input type="text" id="up_burstLimit" onkeyup="update()">
 				</label>
 			</div>
 			<div style="width:100%;">
-				<label>Actual Burst Time (s)
-				<input type="text" id="up_actualBurstTime" onkeyup="update()">
+				<label>Max Limit (K/M)
+				<input type="text" id="up_maxLimit" onkeyup="update()">
 				</label>
 			</div>
 			<div style=' text-align: left; font-weight:bold;'>
@@ -44,19 +39,24 @@
 				</div>
 				<input id="up_limitAtRatio" type="range" class="slider sliderLimitAt">
 			</div>
+			<div style="width:100%;">
+				<label>Actual Burst Time (s)
+				<input type="text" id="up_actualBurstTime" onkeyup="update()">
+				</label>
+			</div>
 			<div class="actual">
 				Actual Burst Time Duration:
 				<div style="clear:both; margin-top:5px">
 					( <span id="line1_up_burstThreshold"></span>
 					* <span id="line1_up_burstTime"></span>s )
 					/ <span id="line1_up_burstLimit"></span>
-					= <span id="line1_up_actualBurstTime"></span> sec.
+					= <span id="line1_up_actualBurstTime"></span>s
 					<br>
 				</div>
 				<div style=' margin-top:5px; padding-top:5px; border-top:1px solid #292929'>
 					Burst <span id="line2_up_maxLimit"></span>
 					to <span id="line2_up_burstLimit"></span>
-					for <span id="line2_up_actualBurstTime"></span> sec.
+					for <span id="line2_up_actualBurstTime"></span>s
 					<br>
 				</div>
 			</div>
@@ -66,18 +66,13 @@
 				<b>TARGET DOWNLOAD</b>
 			</div>
 			<div style="width:100%;">
-				<label>Max Limit (K/M)
-				<input type="text" id="down_maxLimit" onkeyup="update()">
-				</label>
-			</div>
-			<div style="width:100%;">
 				<label>Burst Limit (K/M)
 				<input type="text" id="down_burstLimit" onkeyup="update()">
 				</label>
 			</div>
 			<div style="width:100%;">
-				<label>Actual Burst Time (s)
-				<input type="text" id="down_actualBurstTime" onkeyup="update()">
+				<label>Max Limit (K/M)
+				<input type="text" id="down_maxLimit" onkeyup="update()">
 				</label>
 			</div>
 			<div style=' text-align: left; font-weight:bold; '>
@@ -98,27 +93,31 @@
 				</div>
 				<input id="down_limitAtRatio" type="range" class="slider sliderLimitAt">
 			</div>
+			<div style="width:100%;">
+				<label>Actual Burst Time (s)
+				<input type="text" id="down_actualBurstTime" onkeyup="update()">
+				</label>
+			</div>
 			<div class="actual">
 				Actual Burst Time Duration:
 				<div style="clear:both; margin-top:5px">
 					( <span id="line1_down_burstThreshold"></span>
 					* <span id="line1_down_burstTime"></span>s )
 					/ <span id="line1_down_burstLimit"></span>
-					= <span id="line1_down_actualBurstTime"></span> sec.
+					= <span id="line1_down_actualBurstTime"></span>s
 					<br>
 				</div>
 				<div style=' margin-top: 5px; padding-top:5px; border-top:1px solid #292929 '>
 					Burst <span id="line2_down_maxLimit"></span>
 					to <span id="line2_down_burstLimit"></span>
-					for <span id="line2_down_actualBurstTime"></span> sec.
+					for <span id="line2_down_actualBurstTime"></span>s
 					<br>
 				</div>
 			</div>
 		</div>
 		<div class="caja tabla">
 			<div style="width:100%;border-bottom:2px solid #bbb; margin-bottom: 15px; text-align:center;">
-				<b>RATE LIMIT FOR <span style="color:#ff6600">HOTSPOT</span>
-				OR <span style="color:#ff6600">PPPOE</span></b>
+				<b>RATE LIMIT</b>
 			</div>
 			<div style="clear:both; margin-top:5px; text-align:center;">
 					<span id="res_up_maxLimit"></span>/<span id="res_down_maxLimit"></span> 
@@ -130,13 +129,22 @@
 					<br>
 				</div>
 		</div>
-		<div class="caja">
-			GRÁFICAS
+		<div class="caja graficas">
+			<canvas id="myChart"></canvas>
 		</div>
-		<div class="caja">
-			FÓRMULAS
+		<div class="caja formulas">
+			<div style="width:100%;border-bottom:2px solid #bbb; margin-bottom: 15px; text-align:center;">
+			<b>FÓRMULAS</b>
+			</div>
 		</div>
 	</div>
+	<script src="./chart/chart.min.js"></script>
+	
+	<script src="color.js"></script>
+	<script src="graficas.js"></script>
+	<script src="calculo.js"></script>
 	<script src="index.js"></script>
+	
+	
 	</body>
 </html>
