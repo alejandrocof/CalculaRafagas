@@ -141,14 +141,14 @@ doc_down_limitAtRatio.step=1;
 doc_down_limitAtRatio.value=3;
 
 function obtenerValorKM(cadena,v) {
-	// Expresión regular para buscar un número seguido de "K" o "M"
-	const regex = /^(\d+(\.\d+)?)([KM])$/;
+	// Expresión regular para buscar un número seguido de "k" o "M"
+	const regex = /^(\d+(\.\d+)?)([kM])$/;
 	// Intenta hacer coincidir la cadena con la expresión regular
 	const match = cadena.match(regex);
 	if (match) {
-		let unidad = match[3]; // Extraer la unidad ("K" o "M")
+		let unidad = match[3]; // Extraer la unidad ("k" o "M")
 		let valor;
-		if(unidad=='K'){
+		if(unidad=='k'){
 			valor = parseFloat(match[1])*K;
 		}else{
 			valor = parseFloat(match[1])*M;
@@ -198,10 +198,26 @@ doc_up_burstThresholdRatio.oninput = () => update();
 doc_up_limitAtRatio.oninput = () => update();
 doc_down_burstThresholdRatio.oninput = () => update();
 doc_down_limitAtRatio.oninput = () => update();
-
+function roundDown(number) {
+	var decimalPart = number % 1;
+	if (decimalPart <= 0.5){
+		return Math.trunc(number);
+	}
+	else{
+		return Math.trunc(number)+1;
+	}
+}
 function B2MB_KB(v){
-	if(v>=M) return String(v/M)+"M";
-	return String(v/K)+"K";
+	if(v>=M){
+		let r=v/M;
+		if( r-Math.trunc(r)>0 ){
+			return String(roundDown(v/K))+"k";
+		}
+		else{
+			return String(v/M)+"M";
+		}
+	}
+	return String(roundDown(v/K))+"k";
 }
 
 function setValueDoc(doc,v){
@@ -215,8 +231,8 @@ function setValueDoc(doc,v){
 			text=value;
 		}
 		if(v.type=="T"){
-			value=String(v.valor.toFixed(5).replace(/\.?0*$/,''));
-			//text=value+"s";
+			//value=String(v.valor.toFixed(5).replace(/\.?0*$/,''));
+			value=String(Math.round(v.valor));
 			text=value;
 		}
 		if(v.type=="R"){
