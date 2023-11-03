@@ -8,16 +8,16 @@ function setDatasets(){
 	
 	datasets=[
 		{
-			label:up_maxLimit.name,
-			backgroundColor: lightensColor(up_maxLimit.color),
-			borderColor: up_maxLimit.color,
-			data:Array(12).fill(up_maxLimit.valor/M)
-		},
-		{
 			label:up_burstLimit.name,
 			backgroundColor: lightensColor(up_burstLimit.color),
 			borderColor: up_burstLimit.color,
 			data:Array(12).fill(up_burstLimit.valor/M)
+		},
+		{
+			label:up_maxLimit.name,
+			backgroundColor: lightensColor(up_maxLimit.color),
+			borderColor: up_maxLimit.color,
+			data:Array(12).fill(up_maxLimit.valor/M)
 		},
 		{
 			label:up_burstThreshold.name,
