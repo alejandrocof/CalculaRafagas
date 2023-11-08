@@ -65,8 +65,10 @@ let burstTime_color="DarkViolet";
 let priority_color="CadetBlue";
 
 
-let up_maxLimit={valor:512*K, type:"B", color:maxLimit_color, error:false,name:"Max-Limit"};//"DarkGreen"
-let up_burstLimit={valor:1*M, type:"B", color:burstLimit_color, error:false,name:"Burst-Limit"};//"DeepSkyBlue"
+//let up_maxLimit={valor:512*K, type:"B", color:maxLimit_color, error:false,name:"Max-Limit"};//"DarkGreen"
+let up_maxLimit={valor:2*M, type:"B", color:maxLimit_color, error:false,name:"Max-Limit"};
+//let up_burstLimit={valor:1*M, type:"B", color:burstLimit_color, error:false,name:"Burst-Limit"};//"DeepSkyBlue"
+let up_burstLimit={valor:4*M, type:"B", color:burstLimit_color, error:false,name:"Burst-Limit"};
 let up_actualBurstTime={valor:6, type:"T", color:actualBurstTime_color, error:false};
 
 let down_maxLimit={valor:1*M, type:"B", color:maxLimit_color, error:false};//"DarkGreen"
@@ -232,7 +234,7 @@ function setValueDoc(doc,v){
 		}
 		if(v.type=="T"){
 			//value=String(v.valor.toFixed(5).replace(/\.?0*$/,''));
-			value=String(Math.round(v.valor));
+			value=String(roundDown(v.valor));
 			text=value;
 		}
 		if(v.type=="R"){

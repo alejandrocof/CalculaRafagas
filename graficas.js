@@ -4,10 +4,80 @@ let datasets;
 let tiempos;
 
 
+const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 
 function setDatasets(){
-	let n=20;
+	
+	
 	if( datosValidos ){
+		let n=0;
+		let t=0;
+		let i=0;
+		let dt=roundDown(up_burstTime.valor)/16;
+		let bloque=[{t:0,s:32e6,cargado:false},{t:17,s:32e6,cargado:false}];
+		let actualRate;
+		let averageRate=0;
+		let arrayRate=new Array(16).fill(0);
+		let carga=0.0;
+		let arrayActualRate=[];
+		let arrayAverageRate=[];
+		
+		let arrayTimes=bloque.map( ({t}) => t );
+		let minTime=Math.max(...arrayTimes);
+		let extra=0;
+		console.log(arrayTimes,minTime);
+		console.log(t<minTime, carga!=0,t<minTime || carga!=0)
+		while(extra<2){
+			if( !(t<=minTime || carga>0) ){
+				extra++;
+			}
+			//console.log("*",t,carga,bloque);
+			bloque.forEach((element)=>{
+				if(!element.cargado && element.t<=t){
+					//console.log("**",element)
+					carga=carga+element.s;
+					element.cargado=true;
+				}
+			});
+			
+			averageRate=average(arrayRate)*M;
+			arrayAverageRate.push(averageRate/M);
+			if(averageRate < up_burstThreshold.valor){
+				//se permite la rafaga
+				actualRate=up_burstLimit.valor;
+				
+			}
+			else{
+				actualRate=up_maxLimit.valor;
+			}
+			if(carga==0){
+				actualRate=0;
+			}
+			
+			if(carga-actualRate>=0){
+				carga=carga-actualRate;
+			}
+			else{
+				actualRate=carga;
+				carga=0;
+			}
+			
+			
+			
+			
+			
+			arrayActualRate.push(actualRate/M);
+			
+			console.log(n,arrayRate,B2MB_KB(averageRate),B2MB_KB(actualRate),carga/M)
+			
+			arrayRate[i]=actualRate/M;
+			i=(i+1)%16;
+			t=t+dt;
+			n++;
+			//console.log(averageRate/M,up_burstThreshold.valor/M,actualRate/M,up_burstLimit.valor/M,up_maxLimit.valor/M)
+			
+		}
+		
 		datasets=[
 			{
 				label:up_burstLimit.name,
@@ -33,8 +103,25 @@ function setDatasets(){
 				borderColor: up_limitAt.color,
 				data:Array(n).fill(up_limitAt.valor/M)
 			},
+			{
+				label:"Actual Rate",
+				backgroundColor: lightensColor("black"),
+				borderColor: "black",
+				borderWidth: 5,
+				data:arrayActualRate
+			},
+			{
+				label:"Average Rate",
+				backgroundColor: lightensColor("SaddleBrown"),
+				borderColor: "SaddleBrown",
+				borderWidth: 5,
+				data:arrayAverageRate
+			},
+			
 		];
-		tiempos=[...Array(n).keys()];;
+		tiempos=[...Array(n).keys()];
+		
+		
 	}
 	else{
 		datasets=[];
