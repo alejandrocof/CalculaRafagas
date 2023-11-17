@@ -40,15 +40,28 @@ function setDatasets(){
 				}
 			});
 			
-			averageRate=average(arrayRate)*M;
+			averageRate=average(arrayRate)*M/dt;
 			arrayAverageRate.push(averageRate/M);
 			if(averageRate < up_burstThreshold.valor){
 				//se permite la rafaga
-				actualRate=up_burstLimit.valor;
+				actualRate=up_burstLimit.valor*dt;
+				/*
+				actualRate+=up_burstLimit.valor*dt;
+				if( actualRate> up_burstLimit.valor*dt)
+					actualRate = up_burstLimit.valor*dt;
+					*/
 				
 			}
 			else{
-				actualRate=up_maxLimit.valor;
+				actualRate=up_maxLimit.valor*dt;
+				
+				/*
+				actualRate+=up_maxLimit.valor*dt/2;
+				if( actualRate > up_maxLimit.valor*dt){
+					actualRate = up_maxLimit.valor*dt;
+				}
+				*/
+					
 			}
 			if(carga==0){
 				actualRate=0;
@@ -66,9 +79,9 @@ function setDatasets(){
 			
 			
 			
-			arrayActualRate.push(actualRate/M);
+			arrayActualRate.push(actualRate/(M*dt));
 			
-			console.log(n,arrayRate,B2MB_KB(averageRate),B2MB_KB(actualRate),carga/M)
+			console.log(n,t,arrayRate,B2MB_KB(averageRate),B2MB_KB(actualRate),carga/M)
 			
 			arrayRate[i]=actualRate/M;
 			i=(i+1)%16;
@@ -119,7 +132,7 @@ function setDatasets(){
 			},
 			
 		];
-		tiempos=[...Array(n).keys()];
+		tiempos=[...Array(n).keys()].map(t=>t*dt);
 		
 		
 	}
